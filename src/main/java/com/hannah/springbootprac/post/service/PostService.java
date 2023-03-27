@@ -30,6 +30,12 @@ public class PostService {
         post.update(requestDto.getTitle(), requestDto.getContent());
         return id;
     }
+    @Transactional
+    public void delete(Long id){
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+        postRepository.delete(post);
+    }
 
     public PostResponseDto findById (Long id){
         Post entity = postRepository.findById(id)
